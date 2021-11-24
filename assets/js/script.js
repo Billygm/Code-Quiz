@@ -1,7 +1,23 @@
+var welcomeEl = document.getElementById('welcome');
 var questionsEl = document.getElementById('questions');
-var questions = [];
-var questionPointer = 0;
+var resultsEl = document.getElementById('results');
+var startEl = document.getElementById('start');
+var correctEl = document.getElementById('correct');
+var questions = [
+    {
+        
+    }
+];
 var score = 0;
+var timer = 60;
+var questionPointer = 0;
+var currentQuestion = questions[questionPointer];
+
+startEl.addEventListener('click', startQuiz)
+    function startQuiz() {
+        questionsEl.textContent = currentQuestion;
+        welcomeEl.textContent = "";
+    }
 
 function nextQuestion() {
     questionPointer++;
@@ -13,7 +29,6 @@ function answerQuestion(event) {
     var buttonEl = event.target;
     var answer = buttonEl.dataset.answer;
 
-    var currentQuestion = questions[questionPointer];
     if(answer === currentQuestion.correct) {
         score =+10;
     } else if (answer !== currentQuestion.correct) {
