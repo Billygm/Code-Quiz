@@ -5,6 +5,19 @@ body {
     /* buttoncolor: #8d322a;#4c5d6b; */
 }
 
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+main {
+    text-align: center;
+}
+
+button {
+    background-color: #4c5d6b;
+}
+
 .hide {
     display: none;
 }

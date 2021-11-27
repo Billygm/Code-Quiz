@@ -9,8 +9,8 @@
 </head>
 <body>
     <header>
-        <div class="highscores">View Highscores</div>
-        <div class="timer"></div>
+        <div id="highscores">View Highscores</div>
+        <div id="timer"></div>
     </header>
     
     <main>
@@ -20,15 +20,24 @@
                 <p>Every correct answer is worth 10 points, and each wrong answer takes 10 seconds off the timer. Press start to begin.</p>
                 <button id="start">Start</button>
             </div>
-            <div id="questions">
-                <!-- <div>
+            <div id="questions" class="hide">
+                <div id="q1">
                     <h2>What's the foundation to any webpage?</h2>
                     <button data-answer="CSS">CSS</button>
                     <button data-answer="HTML">HTML</button>
                     <button data-answer="JavaScript">JavaScript</button>
                     <button data-answer="README">README</button>
-                    correct === HTML
-                </div> -->
+                    <!-- correct === HTML -->
+                </div>
+
+                <div id="q2">
+                    <h2>What does HTML stand for?</h2>
+                    <button data-answer="Hyper-Text Markup Language">Hyper-Text Markup Language</button>
+                    <button data-answer="How to meet Ladies">How To Meet Ladies</button>
+                    <button data-answer="Hyperlinks and Text Messaging Language">Hyperlinks and Text Messaging Language</button>
+                    <button data-answer="How To Make Lasagna">How To Make Lasagna</button>
+                    <!-- correct === Hyper-Text Markup Language -->
+                </div>
             </div>
             <div id=results></div>
         </section>
