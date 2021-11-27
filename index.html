@@ -16,12 +16,13 @@
     <main>
         <section>
             <div id="welcome">
-                <h1>Welcome to my timed coding quiz!</h1>
+                <h1>Welcome to my timed coding quiz-game!</h1>
                 <p>Every correct answer is worth 10 points, and each wrong answer takes 10 seconds off the timer. Press start to begin.</p>
                 <button id="start">Start</button>
             </div>
-            <div id="questions" class="hide">
-                <div id="q1">
+
+            <div id="questions">
+                <div id="q1" class="hide">
                     <h2>What's the foundation to any webpage?</h2>
                     <button data-answer="CSS">CSS</button>
                     <button data-answer="HTML">HTML</button>
@@ -30,10 +31,10 @@
                     <!-- correct === HTML -->
                 </div>
 
-                <div id="q2">
+                <div id="q2" class="hide">
                     <h2>What does HTML stand for?</h2>
                     <button data-answer="Hyper-Text Markup Language">Hyper-Text Markup Language</button>
-                    <button data-answer="How to meet Ladies">How To Meet Ladies</button>
+                    <button data-answer="How To Meet Ladies">How To Meet Ladies</button>
                     <button data-answer="Hyperlinks and Text Messaging Language">Hyperlinks and Text Messaging Language</button>
                     <button data-answer="How To Make Lasagna">How To Make Lasagna</button>
                     <!-- correct === Hyper-Text Markup Language -->
@@ -42,6 +43,23 @@
             <div id=results></div>
         </section>
     </main>
+
+    <div class="hide"> 
+        <h2>Highscore</h2>
+        <form method="POST">
+            <div class="input-group">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" placeholder="Name" />
+            </div>
+            <div class="input-group">
+                <label for="score">Score</label>
+                <input type="text" name="score" id="score" placeholder="" />
+                <button id="saveScore">Save</button>
+            </div>
+        </form>
+    </div>
+
     <script src="assets/js/script.js"></script>
+
 </body>
 </html>
