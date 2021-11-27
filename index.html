@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <div id="highscores">View Highscores</div>
+        <a href = "/highscores.html">View Highscores</a>
         <div id="timer"></div>
     </header>
     
@@ -21,30 +21,11 @@
                 <button id="start">Start</button>
             </div>
 
-            <div id="questions">
-                <div id="q1" class="hide">
-                    <h2>What's the foundation to any webpage?</h2>
-                    <button data-answer="CSS">CSS</button>
-                    <button data-answer="HTML">HTML</button>
-                    <button data-answer="JavaScript">JavaScript</button>
-                    <button data-answer="README">README</button>
-                    <!-- correct === HTML -->
-                </div>
-
-                <div id="q2" class="hide">
-                    <h2>What does HTML stand for?</h2>
-                    <button data-answer="Hyper-Text Markup Language">Hyper-Text Markup Language</button>
-                    <button data-answer="How To Meet Ladies">How To Meet Ladies</button>
-                    <button data-answer="Hyperlinks and Text Messaging Language">Hyperlinks and Text Messaging Language</button>
-                    <button data-answer="How To Make Lasagna">How To Make Lasagna</button>
-                    <!-- correct === Hyper-Text Markup Language -->
-                </div>
-            </div>
-            <div id=results></div>
+            <div id="questions"></div>
         </section>
     </main>
 
-    <div class="hide"> 
+    <div id="highscores"> 
         <h2>Highscore</h2>
         <form method="POST">
             <div class="input-group">
