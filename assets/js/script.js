@@ -6,9 +6,10 @@ var timerEl = document.getElementById("timer");
 var nameInput = document.querySelector("#name");
 var scoreInput = document.querySelector("#score");
 var saveScoreButton = document.querySelector("#saveScore");
+var tryAgainButton = document.querySelector("#tryAgain");
 var highscores = JSON.parse(localStorage.getItem("score")) || [];
-var score = 0;
-var timer = 5;
+var currentScore = 0;
+var timer = 50;
 var questions = [
     {
         question: "What's the foundation to any webpage?",
@@ -22,7 +23,7 @@ var questions = [
     },
     {
         question: "What does CSS stand for",
-        choices: ["Captain Sloppy Soup", "Content Style Selectors", "Correcting Styles and Sentances", "Cascading Style Sheet"],
+        choices: ["Captain Sloppy Soup", "Content Style Selector", "Computer Styles Sheet", "Cascading Style Sheet"],
         correctanswer: "Cascading Style Sheet"
     },
     {
@@ -31,10 +32,25 @@ var questions = [
         correctanswer: true
     },
     {
-        question: "What's the foundation to any webpage?",
-        choices: ["CSS", "HTML", "JavaScript", "Bootstrap"],
-        correctanswer: "HTML"
+        question: "What element does the JavaScript go inside?",
+        choices: ["<link>", "<js>", "<rel>", "<script>"],
+        correctanswer: "<script>"
     },
+    {
+        question: "What element does the CSS go inside?",
+        choices: ["<link>", "<js>", "<src>", "<script>"],
+        correctanswer: "<link>"
+    },
+    {
+        question: "Where in an HTMl document is the correct place to insert a JavaScript?",
+        choices: ["The <head> section", "The <body> section", "Either the <head> or <body> section", "You dont have to link your JavaScript for it to work"],
+        correctanswer: "The <body> section"
+    },
+    {
+        question: "Where in an HTML document is the correct place to link your CSS?",
+        choices: ["The <head> section", "The <body> section", "Either the <head> or <body> section", "You dont have to link your CSS for it to work"],
+        correctanswer: "The <head> section"
+    }
 ];
 var questionPointer = 0;
 var currentQuestion = questions[questionPointer];
@@ -45,9 +61,10 @@ function startQuiz() {
     welcomeEl.textContent = "";
     console.log(currentQuestion);
     renderDisplay();
+
     // the countdown timer
     var timeInterval = setInterval(function () {
-        if (timer >= 0) {
+        if (timer > 0) {
             timerEl.textContent = timer;
             timer--;
         } else {
@@ -56,17 +73,24 @@ function startQuiz() {
             timerEl.textContent = "";
             clearInterval(timeInterval);
         }
+        if (currentQuestion === undefined) {
+            timer = 0;
+        }
     }, 1000);
 };
 
 function renderDisplay() {
-    questionsEl.textContent = currentQuestion.question;
-    currentQuestion.choices.forEach(function (choice) {
-        var questionButton = document.createElement("button")
-        questionButton.innerText = choice
-        questionsEl.appendChild(questionButton)
-        /////////////////////////////////////////
-    })
+    if (currentQuestion === undefined) {
+        return;
+    } else {
+        questionsEl.textContent = currentQuestion.question;
+        currentQuestion.choices.forEach(function (choice) {
+            var questionButton = document.createElement("button")
+            questionButton.innerText = choice
+            questionsEl.appendChild(questionButton)
+            questionButton.addEventListener("click", answerQuestion);
+        });
+    };
 };
 
 function nextQuestion() {
@@ -82,12 +106,12 @@ function answerQuestion(event) {
     var answer = buttonEl.innerText;
 
     if (answer === currentQuestion.correctanswer) {
-        score + 10;
+        currentScore = currentScore + 10;
     } else {
-        timer - 10;
+        timer = timer - 10;
     }
 
-    console.log(score)
+    console.log(currentScore)
     console.log(answer)
 
     nextQuestion();
@@ -95,14 +119,18 @@ function answerQuestion(event) {
 
 saveScoreButton.addEventListener("click", function (event) {
     event.preventDefault();
-
     var user = {
         name: nameInput.value.trim(),
         score: scoreInput.value.trim(),
     }
     highscores.push(user)
     localStorage.setItem("user", JSON.stringify(highscores));
+    alert("Your score was saved. Click try again to play again, to view your scores click 'View Highscores'")
 });
 
 startEl.addEventListener("click", startQuiz);
-questionsEl.addEventListener("click", answerQuestion);
+tryAgainButton.addEventListener("click", function (event) {
+    event.preventDefault();
+    location.reload();
+    return false;
+});
