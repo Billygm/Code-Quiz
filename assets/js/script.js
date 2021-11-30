@@ -1,13 +1,13 @@
 var welcomeEl = document.getElementById("welcome");
-var questionsEl = document.getElementById("questions");
 var startEl = document.getElementById("start");
+var questionsEl = document.getElementById("questions");
+var feedbackEl = document.getElementById("feedback");
 var recordScore = document.querySelector("#highscores");
 var timerEl = document.getElementById("timer");
 var nameInput = document.querySelector("#name");
 var scoreInput = document.querySelector("#score");
 var saveScoreButton = document.querySelector("#saveScore");
-var tryAgainButton = document.querySelector("#tryAgain");
-var highscores = JSON.parse(localStorage.getItem("score")) || [];
+var highscores = JSON.parse(localStorage.getItem("user")) || [];
 var currentScore = 0;
 var timer = 50;
 var questions = [
@@ -28,8 +28,8 @@ var questions = [
     },
     {
         question: "A 'true' or 'false' variable is called a boolean.",
-        choices: [true, false],
-        correctanswer: true
+        choices: ["true", "false"],
+        correctanswer: "true"
     },
     {
         question: "What element does the JavaScript go inside?",
@@ -42,7 +42,7 @@ var questions = [
         correctanswer: "<link>"
     },
     {
-        question: "Where in an HTMl document is the correct place to insert a JavaScript?",
+        question: "Where in an HTML document is the correct place to insert a JavaScript?",
         choices: ["The <head> section", "The <body> section", "Either the <head> or <body> section", "You dont have to link your JavaScript for it to work"],
         correctanswer: "The <body> section"
     },
@@ -55,26 +55,27 @@ var questions = [
 var questionPointer = 0;
 var currentQuestion = questions[questionPointer];
 
+feedbackEl.setAttribute("style", "font-style: italic; opacity: 0.25")
 recordScore.setAttribute("style", "display:none");
 
 function startQuiz() {
-    welcomeEl.textContent = "";
+    welcomeEl.setAttribute("style", "visibility: hidden; font-size: xx-small;");
     console.log(currentQuestion);
     renderDisplay();
 
     // the countdown timer
     var timeInterval = setInterval(function () {
-        if (timer > 0) {
-            timerEl.textContent = timer;
+        if (currentQuestion === undefined) {
+            questionsEl.textContent = "GAME OVER! Please record your score.";
+            recordScore.setAttribute("style", "display:show");
+            clearInterval(timeInterval);
+        } else if (timer > 0) {
+            timerEl.textContent = "Time: " + timer;
             timer--;
         } else {
             questionsEl.textContent = "GAME OVER! Please record your score.";
             recordScore.setAttribute("style", "display:show");
-            timerEl.textContent = "";
             clearInterval(timeInterval);
-        }
-        if (currentQuestion === undefined) {
-            timer = 0;
         }
     }, 1000);
 };
@@ -85,9 +86,11 @@ function renderDisplay() {
     } else {
         questionsEl.textContent = currentQuestion.question;
         currentQuestion.choices.forEach(function (choice) {
-            var questionButton = document.createElement("button")
-            questionButton.innerText = choice
-            questionsEl.appendChild(questionButton)
+            var questionButton = document.createElement("button");
+            questionButton.innerText = choice;
+            questionsEl.appendChild(document.createElement("br"));
+            questionsEl.appendChild(questionButton);
+
             questionButton.addEventListener("click", answerQuestion);
         });
     };
@@ -106,10 +109,18 @@ function answerQuestion(event) {
     var answer = buttonEl.innerText;
 
     if (answer === currentQuestion.correctanswer) {
-        currentScore = currentScore + 10;
+        // currentScore = currentScore + 10;
+        feedbackEl.textContent = "CORRECT!";
     } else {
         timer = timer - 10;
+        feedbackEl.textContent = "INCORRECT!";
     }
+    setTimeout(function() {
+        feedbackEl.textContent = "";
+    },1000);
+    
+    currentScore = timer + 1;
+    scoreInput.textContent = currentScore;
 
     console.log(currentScore)
     console.log(answer)
@@ -121,16 +132,17 @@ saveScoreButton.addEventListener("click", function (event) {
     event.preventDefault();
     var user = {
         name: nameInput.value.trim(),
-        score: scoreInput.value.trim(),
+        score: currentScore,
     }
     highscores.push(user)
     localStorage.setItem("user", JSON.stringify(highscores));
-    alert("Your score was saved. Click try again to play again, to view your scores click 'View Highscores'")
+    var tryAgain = confirm("Your score was saved. Would you like to try again?")
+    if (tryAgain === true) {
+        location.reload();
+        return false;
+    } else if (tryAgain === false) {
+        location.replace("/highscores.html")
+    }
 });
 
 startEl.addEventListener("click", startQuiz);
-tryAgainButton.addEventListener("click", function (event) {
-    event.preventDefault();
-    location.reload();
-    return false;
-});
