@@ -9,7 +9,7 @@ var scoreInput = document.querySelector("#score");
 var saveScoreButton = document.querySelector("#saveScore");
 var highscores = JSON.parse(localStorage.getItem("user")) || [];
 var currentScore = 0;
-var timer = 50;
+var timer = 45;
 var questions = [
     {
         question: "What's the foundation to any webpage?",
@@ -72,7 +72,8 @@ function startQuiz() {
         } else if (timer > 0) {
             timerEl.textContent = "Time: " + timer;
             timer--;
-        } else {
+        } else if (timer <= 0) {
+            timerEl.textContent = "Time: 0"
             questionsEl.textContent = "GAME OVER! Please record your score.";
             recordScore.setAttribute("style", "display:show");
             clearInterval(timeInterval);
@@ -115,11 +116,15 @@ function answerQuestion(event) {
         timer = timer - 10;
         feedbackEl.textContent = "INCORRECT!";
     }
-    setTimeout(function() {
+    setTimeout(function () {
         feedbackEl.textContent = "";
-    },1000);
-    
+    }, 1000);
+
+
     currentScore = timer + 1;
+    if (timer < 0) {
+        currentScore = 0
+    }
     scoreInput.textContent = currentScore;
 
     console.log(currentScore)

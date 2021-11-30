@@ -7,19 +7,19 @@ body {
 }
 
 header {
-    color: #A1172E;
+    color: #50162C;
     display: flex;
     justify-content: space-between;
 }
 
 a {
-    color: #A1172E;
+    color: #50162C;
 }
 
 button {
     font-weight: bold;
-    background-color: #0A0A0A;
-    color:#2A5D8D;
+    background-color: #50162C;
+    color:#020613;
     border-radius: 7px;
     padding: 7px;
     margin: 10px;
