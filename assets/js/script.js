@@ -146,7 +146,7 @@ saveScoreButton.addEventListener("click", function (event) {
         location.reload();
         return false;
     } else if (tryAgain === false) {
-        location.replace("/highscores.html")
+        location.replace("./highscores.html")
     }
 });
 
